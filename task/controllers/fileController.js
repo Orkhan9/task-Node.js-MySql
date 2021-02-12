@@ -21,7 +21,7 @@ exports.upload = (req, res, next) => {
 };
 
 // @desc      Get All Files
-// @route     GET /api/file/files
+// @route     GET /api/file/list
 // @access    Public
 exports.getFiles = asyncHandler(async (req, res, next) => {
 
@@ -37,8 +37,8 @@ exports.getFiles = asyncHandler(async (req, res, next) => {
     })
 })
 
-// @desc      Get single review
-// @route     GET /api/file/file/:id
+// @desc      Get single file
+// @route     GET /api/file/:id
 // @access    Public
 exports.getFile = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
@@ -50,24 +50,8 @@ exports.getFile = asyncHandler(async (req, res, next) => {
     })
 })
 
-// @desc      Update review
-// @route     PUT /api/v1/reviews/:id
-// @access    Private
-exports.updateFile = asyncHandler(async (req, res, next) => {
-    const id = req.params.id;
-    const file = await File.findByPk(id);
-    if (!file) return next(new HttpException(404, `No file with the id of ${req.params.id}`));
-
-
-    res.status(200).json({
-        success: true,
-        data: file
-    })
-
-})
-
-// @desc      Delete review
-// @route     DELETE /api/v1/reviews/:id
+// @desc      Delete file
+// @route     DELETE /api/file/delete/:id
 // @access    Private
 exports.deleteFile = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
@@ -87,6 +71,9 @@ exports.deleteFile = asyncHandler(async (req, res, next) => {
 
 })
 
+// @desc      Download file
+// @route     DOWNLOAD /api/file/download/:id
+// @access    Private
 exports.download = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
     const file = await File.findByPk(id);
@@ -94,6 +81,9 @@ exports.download = asyncHandler(async (req, res, next) => {
     res.download(filePath);
 })
 
+// @desc      Edit file
+// @route     EDIT /api/file/update/:id
+// @access    Private
 exports.edit = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
     const file = req.file;

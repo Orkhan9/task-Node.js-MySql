@@ -86,9 +86,6 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route     GET /api/v1/auth/me
 // @access    Private
 exports.info = asyncHandler(async (req, res, next) => {
-    // user is already available in req due to the protect middleware
-    // const user = req.user;
-    console.log(req.user)
     const user = await User.findByPk(req.user.id);
 
     res.status(200).json({
